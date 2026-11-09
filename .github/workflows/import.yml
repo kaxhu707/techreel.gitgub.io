@@ -11,7 +11,7 @@ jobs:
       - name: Download zip and extract
         run: |
           set -e
-          curl -L --fail --retry 3 -o /tmp/site.zip "https://tmpfiles.org/dl/1794259934.a60d9936f946add6/wpA6WEJS9z0I/techreel-v4.zip"
+          curl -L --fail --retry 3 -o /tmp/site.zip "https://tmpfiles.org/dl/1794260249.97890f261419894d/wpA6WEJS9z0I/techreel-v4.zip"
           mkdir -p /tmp/unpack
           unzip -q /tmp/site.zip -d /tmp/unpack
           rsync -a --exclude '.git' --exclude '.github' /tmp/unpack/techreel/ ./
