@@ -11,16 +11,15 @@ jobs:
       - name: Download zip and extract
         run: |
           set -e
-          curl -L --fail --retry 3 -o /tmp/site.zip "https://tmpfiles.org/dl/1794259228.fbb1898671b5da76/wQAsW2Jf75T7/techreel-v3.zip"
+          curl -L --fail --retry 3 -o /tmp/site.zip "https://tmpfiles.org/dl/1794259934.a60d9936f946add6/wpA6WEJS9z0I/techreel-v4.zip"
           mkdir -p /tmp/unpack
           unzip -q /tmp/site.zip -d /tmp/unpack
-          src=/tmp/unpack/techreel
-          rsync -a --exclude '.git' --exclude '.github' "$src"/ ./
+          rsync -a --exclude '.git' --exclude '.github' /tmp/unpack/techreel/ ./
       - name: Commit and push
         run: |
           git config user.name "kaxhu707"
           git config user.email "kaxhu707@users.noreply.github.com"
           git add -A
           git diff --cached --quiet && echo "No changes" && exit 0
-          git commit -m "Fix 404 html urls, empty ad gaps, phone, Hindi UI"
+          git commit -m "Remove GPT leftover ads, WP generator, dates 2026"
           git push
