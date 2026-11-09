@@ -1,0 +1,27 @@
+name: Import site
+on:
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download zip and extract
+        run: |
+          set -e
+          curl -L --fail --retry 3 -o /tmp/site.zip "https://tmpfiles.org/dl/1794257734.b318149fe92cdba0/w0AcWDJPwuZ8/techreel-v1.zip"
+          file /tmp/site.zip
+          mkdir -p /tmp/unpack
+          unzip -q /tmp/site.zip -d /tmp/unpack
+          if [ -d /tmp/unpack/techreel ]; then src=/tmp/unpack/techreel; else src=/tmp/unpack; fi
+          rsync -a --exclude '.git' --exclude '.github' "$src"/ ./
+      - name: Commit and push
+        run: |
+          git config user.name "kaxhu707"
+          git config user.email "kaxhu707@users.noreply.github.com"
+          git add -A
+          git diff --cached --quiet && echo "No changes" && exit 0
+          git commit -m "TechReel site import"
+          git push
