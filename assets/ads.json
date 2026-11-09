@@ -1,0 +1,9 @@
+{
+  "enabled": false,
+  "pubId": "ca-pub-0000000000000000",
+  "slots": {
+    "inarticle": true,
+    "header": false,
+    "footer": false
+  }
+}

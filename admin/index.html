@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>TechReel Admin — Ads</title>
+<style>
+body{font-family:system-ui,sans-serif;background:#111;color:#eee;margin:0;padding:24px}
+.card{max-width:480px;margin:0 auto;background:#1c1c1c;border-radius:12px;padding:24px}
+input,button{width:100%;box-sizing:border-box;padding:10px;margin:8px 0;border-radius:8px;border:1px solid #333;background:#0d0d0d;color:#eee}
+button{background:#2ea043;border:0;font-weight:700;cursor:pointer}
+label{font-size:14px;display:block;margin-top:12px}
+.row{display:flex;align-items:center;gap:8px}
+.hint{color:#888;font-size:13px}
+</style>
+</head>
+<body>
+<div class="card">
+<h1>TechReel Ads</h1>
+<p class="hint">PIN local hai (browser). Ads GitHub pe <code>assets/ads.json</code> se chalte hain — yahan se copy karke woh file update karo, ya neeche download.</p>
+<div id="gate">
+<label>PIN</label>
+<input id="pin" type="password" placeholder="PIN">
+<button id="go">Login</button>
+<p class="hint">Pehli dafa PIN set ho jayega.</p>
+</div>
+<div id="panel" style="display:none">
+<label>AdSense pub ID</label>
+<input id="pub" placeholder="ca-pub-xxxxxxxx">
+<label class="row"><input type="checkbox" id="en" style="width:auto"> Ads ON</label>
+<label class="row"><input type="checkbox" id="inarticle" style="width:auto"> In-article ads</label>
+<button id="save">Download ads.json</button>
+<button id="out" style="background:#444">Logout</button>
+</div>
+</div>
+<script>
+async function sha(s){var b=new TextEncoder().encode(s);var h=await crypto.subtle.digest("SHA-256",b);return Array.from(new Uint8Array(h)).map(x=>x.toString(16).padStart(2,"0")).join("")}
+var gate=document.getElementById("gate"), panel=document.getElementById("panel");
+document.getElementById("go").onclick=async function(){
+  var p=document.getElementById("pin").value.trim(); if(!p) return;
+  var h=await sha(p);
+  var stored=localStorage.getItem("tr_pin");
+  if(!stored){ localStorage.setItem("tr_pin", h); }
+  else if(stored!==h){ alert("Galat PIN"); return; }
+  gate.style.display="none"; panel.style.display="block";
+  fetch("../assets/ads.json").then(r=>r.json()).then(function(c){
+    document.getElementById("pub").value=c.pubId||"";
+    document.getElementById("en").checked=!!c.enabled;
+    document.getElementById("inarticle").checked!==false;
+    document.getElementById("inarticle").checked=!(c.slots&&c.slots.inarticle===false);
+  }).catch(function(){});
+};
+document.getElementById("save").onclick=function(){
+  var obj={enabled:document.getElementById("en").checked,pubId:document.getElementById("pub").value.trim(),slots:{inarticle:document.getElementById("inarticle").checked,header:false,footer:false}};
+  var blob=new Blob([JSON.stringify(obj,null,2)],{type:"application/json"});
+  var a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="ads.json"; a.click();
+  alert("ads.json download. GitHub repo me assets/ads.json replace karo.");
+};
+document.getElementById("out").onclick=function(){ location.reload(); };
+</script>
+</body>
+</html>
