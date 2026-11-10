@@ -11,7 +11,7 @@ jobs:
       - name: Download zip and extract
         run: |
           set -e
-          curl -L --fail --retry 3 -o /tmp/site.zip "https://tmpfiles.org/dl/1794286631.75826f1137bd897a/w4AaWyXsHk8E/techreel-v7.zip"
+          curl -L --fail --retry 3 -o /tmp/site.zip "https://tmpfiles.org/dl/1794286949.2d6503195ca71b47/w9AjWpXAWbXc/techreel-v9.zip"
           mkdir -p /tmp/unpack
           unzip -q /tmp/site.zip -d /tmp/unpack
           rsync -a --exclude '.git' --exclude '.github' /tmp/unpack/techreel/ ./
@@ -21,5 +21,5 @@ jobs:
           git config user.email "kaxhu707@users.noreply.github.com"
           git add -A
           git diff --cached --quiet && echo "No changes" && exit 0
-          git commit -m "Add in-post featured images"
+          git commit -m "Post dates Oct 31 to Nov 10 2026"
           git push
