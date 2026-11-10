@@ -11,7 +11,7 @@ jobs:
       - name: Download zip and extract
         run: |
           set -e
-          curl -L --fail --retry 3 -o /tmp/site.zip "https://tmpfiles.org/dl/1794260539.83e69747114a6851/wLAgWjJSDRaw/techreel-v5.zip"
+          curl -L --fail --retry 3 -o /tmp/site.zip "https://tmpfiles.org/dl/1794286309.70561e04bcb6eb69/wEAiW5XfMKo8/techreel-v6.zip"
           mkdir -p /tmp/unpack
           unzip -q /tmp/site.zip -d /tmp/unpack
           rsync -a --exclude '.git' --exclude '.github' /tmp/unpack/techreel/ ./
@@ -21,5 +21,5 @@ jobs:
           git config user.email "kaxhu707@users.noreply.github.com"
           git add -A
           git diff --cached --quiet && echo "No changes" && exit 0
-          git commit -m "Restore header nav HTML/CSS (BeautifulSoup damage)"
+          git commit -m "Remove leftover empty GPT 250px ad boxes"
           git push
