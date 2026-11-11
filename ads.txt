@@ -1,3 +1,4 @@
+google.com, pub-9937845186486833, DIRECT, f08c47fec0942fa0
 OWNERDOMAIN=techreel.mkm.fan
 MANAGERDOMAIN=ehumps.com
 ehumps.com, 0208, DIRECT
